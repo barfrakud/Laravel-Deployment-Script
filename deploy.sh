@@ -9,7 +9,28 @@ set -x
 # Verify Laravel requirments
 
 # Verify Laravel .env file
+# Define the environment variable names to check
+ENV_VARS=("APP_ENV" "APP_DEBUG")
 
+# Check if .env file exists
+if [ -f .env ]; then
+    # Loop through each environment variable
+    for var in "${ENV_VARS[@]}"; do
+        # Get the value of the variable from .env file
+        value_env=$(grep -E "^$var=" .env | cut -d= -f2)
+        # Get the value of the variable from .env_production file
+        value_prod=$(grep -E "^$var=" .env_production | cut -d= -f2)
+        
+        # Compare the values
+        if [ "$value_env" = "$value_prod" ]; then
+            echo "$var is set correctly in .env file."
+        else
+            echo "Error: $var is not set correctly in .env file. Expected value: $value_prod"
+        fi
+    done
+else
+    echo "Error: .env file not found."
+fi
 
 
 # Update Composer dependencies
