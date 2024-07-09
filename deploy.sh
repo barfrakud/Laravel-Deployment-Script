@@ -6,6 +6,12 @@ set -e
 # Print each command before executing it
 set -x
 
+# Verify Laravel requirments
+
+# Verify Laravel .env file
+
+
+
 # Update Composer dependencies
 composer install --no-dev --optimize-autoloader
 
@@ -40,6 +46,14 @@ php artisan view:cache
 #chown -R www:www .
 #find . -type f -exec chmod 644 {} \;
 #find . -type d -exec chmod 755 {} \;
+
+# Directory permissions
+# Laravel will need to write to the bootstrap/cache and storage directories, so you should ensure the web server process owner has permission to write to these directories.
+
+# bootstrap/cache
+# storage
+
+
 
 # Restart your web server (uncomment and adjust as needed)
 # sudo service nginx restart
